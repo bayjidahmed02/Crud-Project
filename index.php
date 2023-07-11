@@ -1,3 +1,10 @@
+<?php
+include_once "./function.php";
+$crud = new crud();
+if (isset($_POST['add_info'])) {
+    $return_msg = $crud->add_info($_POST);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,10 +18,15 @@
 <body>
     <div class="container ">
 
-        <form action="" class="mt-4 p-4 shadow">
+        <form action="" class="mt-4 p-4 shadow" method="post" enctype="multipart/form-data">
             <h2 class="text-center ">
                 <a href="index.php" class="text-decoration-none text-warning">Student Info</a>
             </h2>
+            <p class="text-success">
+                <?php if (isset($return_msg)) {
+                    echo $return_msg;
+                } ?>
+            </p>
             <input type="text" class="form-control w-100 my-4" placeholder="Name" name="name">
             <input type="text" class="form-control w-100 my-4" placeholder="Roll" name="roll">
             <input type="text" class="form-control w-100 my-4" placeholder="Reg" name="reg">
