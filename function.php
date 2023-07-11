@@ -33,4 +33,12 @@ class crud
             return $return_msg;
         }
     }
+    public function display_info()
+    {
+        $query = "SELECT * FROM student_info";
+        if (mysqli_query($this->conn, $query)) {
+            $return_data = mysqli_query($this->conn, $query);
+            return $return_data;
+        }
+    }
 }
