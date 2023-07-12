@@ -5,6 +5,15 @@ if (isset($_POST['add_info'])) {
     $return_msg = $crud->add_info($_POST);
 }
 $student_info = $crud->display_info();
+
+if (isset($_GET['status'])) {
+    if ($_GET['status'] = 'delete') {
+        $delete_id =  $_GET['id'];
+        $deleted_message = $crud->delete_info($delete_id);
+    }
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,10 +43,16 @@ $student_info = $crud->display_info();
                     echo $return_msg;
                 } ?>
             </p>
-            <input type="text" class="form-control w-100 my-4" placeholder="Name" name="name">
-            <input type="text" class="form-control w-100 my-4" placeholder="Roll" name="roll">
-            <input type="text" class="form-control w-100 my-4" placeholder="Reg" name="reg">
-            <input type="file" name="img" class="w-100 form-control my-4">
+            <p class="text-success">
+                <?php if (isset($deleted_message)) {
+                    echo $deleted_message;
+                } ?>
+            </p>
+
+            <input type="text" class="form-control w-100 my-4" placeholder="Name" name="name" required>
+            <input type="text" class="form-control w-100 my-4" placeholder="Roll" name="roll" required>
+            <input type="text" class="form-control w-100 my-4" placeholder="Reg" name="reg" required>
+            <input type="file" name="img" class="w-100 form-control my-4" required>
             <button type="submit" name="add_info" class="w-100 btn btn-warning">Add Info</button>
         </form>
 
@@ -59,10 +74,10 @@ $student_info = $crud->display_info();
                         <td><?php echo $s_info['name']; ?></td>
                         <td><?php echo $s_info['roll']; ?></td>
                         <td><?php echo $s_info['reg']; ?></td>
-                        <td><img src="upload/<?php echo $s_info['img']; ?>" alt="" width="60" height="60" style="object-fit: cover;"></td>
+                        <td><img src="upload/<?php echo $s_info['img']; ?>" alt="Student Image" width="60" height="60" style="object-fit: cover;"></td>
                         <td>
-                            <a href="" class="btn btn-sm btn-warning px-4 mx-1">Edit</a>
-                            <a href="" class="btn btn-sm btn-danger px-4 mx-1">Delete</a>
+                            <a href="edit.php?status=edit&&id=<?php echo $s_info['id']; ?>" class="btn btn-sm btn-warning px-4 mx-1">Edit</a>
+                            <a href="?status=delete&&id=<?php echo $s_info['id']; ?>" class="btn btn-sm btn-danger px-4 mx-1">Delete</a>
                         </td>
                     </tr>
                 <?php } ?>

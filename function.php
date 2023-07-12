@@ -41,4 +41,37 @@ class crud
             return $return_data;
         }
     }
+    public function display_info_by_id($id)
+    {
+        $query = "SELECT * FROM student_info WHERE id=$id";
+        if (mysqli_query($this->conn, $query)) {
+            $return_data = mysqli_query($this->conn, $query);
+            $student_data = mysqli_fetch_assoc($return_data);
+            return $student_data;
+        }
+    }
+    public function updateData($data)
+    {
+        $id = $data['u_id'];
+        $name = $data['u_name'];
+        $roll = $data['u_roll'];
+        $reg = $data['u_reg'];
+        $img = $_FILES['u_img']['name'];
+        $temp_name = $_FILES['u_img']['tmp_name'];
+
+        $query = "UPDATE student_info SET name='$name', roll='$roll', reg='$reg', img='$img' WHERE id=$id";
+
+        if (mysqli_query($this->conn, $query)) {
+            move_uploaded_file($temp_name, 'upload/' . $img);
+            return "information Update Successfully";
+        }
+    }
+
+    public function delete_info($id)
+    {
+        $query = "DELETE FROM student_info WHERE id=$id";
+        if (mysqli_query($this->conn, $query)) {
+            return "Info Deleted Successfully";
+        }
+    }
 }
